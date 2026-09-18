@@ -1,9 +1,6 @@
 #include "IStreamGenerator.hpp"
 
-IStreamGenerator::IStreamGenerator(std::istream& in)
-    : in{in}
-{
-}
+IStreamGenerator::IStreamGenerator(std::istream& in) : in(in) {}
 
 int IStreamGenerator::generate()
 {
