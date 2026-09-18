@@ -1,13 +1,12 @@
-#include "IStreamGenerator.hpp"
+#include "RandomGenerator.hpp"
 
-IStreamGenerator::IStreamGenerator(std::istream& in)
-    : in{in}
+RandomGenerator::RandomGenerator(const int min, const int max)
 {
+    this->generator = std::mt19937(std::random_device{}());
+    this->distribution = std::uniform_int_distribution<int>(min, max);
 }
 
-int IStreamGenerator::generate()
+int RandomGenerator::generate()
 {
-    int value = 0;
-    this->in >> value;
-    return value;
+    return this->distribution(this->generator);
 }
