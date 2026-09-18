@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Generator.h"
+#include "Generator.hpp"
 #include <iostream>
 
 /**
