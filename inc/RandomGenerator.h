@@ -1,28 +1,33 @@
 #pragma once
 
-#include "Generator.hpp"
+#include "Generator.h"
 #include <random>
 
 /**
  * @brief Генератор случайных целых чисел в диапазоне [min, max]
- *
- * Использует std::mt19937 (генератор Мерсенна) и
- * равномерное распределение.
  */
 class RandomGenerator : public Generator
 {
 private:
-    std::uniform_int_distribution<int> distribution;  
-    std::mt19937 generator;                          
+    std::uniform_int_distribution<int> distribution;  ///< Распределение значений в диапазоне
+    std::mt19937 generator;                            ///< Генератор псевдослучайных чисел
 
 public:
     /**
-     * @brief Конструктор
+     * @brief Конструктор генератора случайных чисел
+     * 
+     * Инициализирует генератор аппаратным случайным числом
+     * (std::random_device) и настраивает диапазон значений.
+     * 
      * @param min минимальное значение (включительно)
      * @param max максимальное значение (включительно)
      */
     RandomGenerator(const int min, const int max);
 
-    /** @brief Вернуть следующее случайное число из диапазона */
+    /**
+     * @brief Сгенерировать следующее случайное число
+     * 
+     * @return случайное целое число из диапазона [min, max]
+     */
     int generate() override;
 };
