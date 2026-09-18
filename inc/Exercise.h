@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Matrix.h"
-#include "Generator.h"
+#include "Matrix.hpp"
+#include "Generator.hpp"
 
 /**
  * @brief Абстрактный базовый класс для заданий над матрицей
