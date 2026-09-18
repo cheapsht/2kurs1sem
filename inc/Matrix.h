@@ -3,14 +3,13 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include <sstream>
 
 /**
  * @brief Шаблонный класс двумерной матрицы
- *
+ * 
  * Хранит данные в std::vector<std::vector<T>>.
  * Поддерживает ввод/вывод, доступ по индексу, копирование.
- *
+ * 
  * @tparam T тип элементов (int, double и т.д.)
  */
 template <typename T>
@@ -22,155 +21,155 @@ private:
     size_t cols_count;                  ///< Количество столбцов
 
 public:
-    /** @brief Пустая матрица 0x0 */
+    /**
+     * @brief Конструктор по умолчанию
+     * 
+     * Создает пустую матрицу размером 0x0.
+     */
     Matrix();
 
     /**
-     * @brief Матрица заданного размера
-     * @param rows число строк
-     * @param cols число столбцов
+     * @brief Конструктор с заданными размерами
+     * 
+     * Создает матрицу заданного размера. Элементы инициализируются
+     * значениями по умолчанию для типа T.
+     * 
+     * @param rows количество строк
+     * @param cols количество столбцов
      */
     Matrix(size_t rows, size_t cols);
 
     /**
-     * @brief Матрица заданного размера, заполненная значением
-     * @param rows число строк
-     * @param cols число столбцов
-     * @param value значение для заполнения
+     * @brief Конструктор с заданными размерами и начальным значением
+     * 
+     * Создает матрицу заданного размера и заполняет все элементы
+     * указанным значением.
+     * 
+     * @param rows количество строк
+     * @param cols количество столбцов
+     * @param value значение для заполнения всех элементов
      */
     Matrix(size_t rows, size_t cols, const T& value);
 
-    /** @brief Конструктор копирования */
+    /**
+     * @brief Конструктор копирования
+     * 
+     * Создает глубокую копию другой матрицы.
+     * 
+     * @param other матрица, которую нужно скопировать
+     */
     Matrix(const Matrix& other);
 
-    /** @brief Деструктор */
+    /**
+     * @brief Деструктор
+     * 
+     * Освобождает ресурсы матрицы.
+     */
     ~Matrix();
 
-    /** @brief Оператор присваивания */
+    /**
+     * @brief Оператор присваивания
+     * 
+     * Выполняет глубокое копирование другой матрицы.
+     * Корректно обрабатывает самоприсваивание.
+     * 
+     * @param other матрица, которую нужно присвоить
+     * @return ссылка на текущую матрицу
+     */
     Matrix& operator=(const Matrix& other);
 
-    /** @brief Доступ к строке по индексу (для чтения/записи) */
+    /**
+     * @brief Оператор доступа к строке по индексу (не const версия)
+     * 
+     * Позволяет читать и изменять элементы матрицы
+     * через синтаксис matrix[i][j].
+     * 
+     * @param row индекс строки (от 0 до rows-1)
+     * @return ссылка на вектор элементов строки
+     */
     std::vector<T>& operator[](size_t row);
 
-    /** @brief Доступ к строке по индексу (только чтение) */
+    /**
+     * @brief Оператор доступа к строке по индексу (const версия)
+     * 
+     * Позволяет только читать элементы матрицы
+     * через синтаксис matrix[i][j].
+     * 
+     * @param row индекс строки (от 0 до rows-1)
+     * @return константная ссылка на вектор элементов строки
+     */
     const std::vector<T>& operator[](size_t row) const;
 
-    /** @return число строк */
+    /**
+     * @brief Получить количество строк матрицы
+     * @return количество строк
+     */
     size_t rows() const;
 
-    /** @return число столбцов */
+    /**
+     * @brief Получить количество столбцов матрицы
+     * @return количество столбцов
+     */
     size_t cols() const;
 
-    /** @return строковое представление матрицы */
+    /**
+     * @brief Преобразовать матрицу в строку
+     * 
+     * Элементы разделяются табуляцией, строки — переносом строки.
+     * 
+     * @return строковое представление матрицы
+     */
     std::string toString() const;
 
-    /** @brief Заполнить всю матрицу значением */
+    /**
+     * @brief Заполнить всю матрицу заданным значением
+     * 
+     * @param value значение, которым нужно заполнить матрицу
+     */
     void fill(const T& value);
 
-    /** @brief Заполнить нулями (или значением по умолчанию для типа T) */
+    /**
+     * @brief Заполнить матрицу нулями
+     * 
+     * Использует значение по умолчанию для типа T (0 для int, 0.0 для double).
+     */
     void fillZero();
 
-    /** @brief Изменить размеры матрицы */
+    /**
+     * @brief Изменить размеры матрицы
+     * 
+     * При уменьшении размеров данные теряются.
+     * При увеличении новые элементы инициализируются значением по умолчанию.
+     * 
+     * @param rows новое количество строк
+     * @param cols новое количество столбцов
+     */
     void resize(size_t rows, size_t cols);
 
-    /** @brief Вывод матрицы в поток (cout << matrix) */
+    /**
+     * @brief Оператор вывода матрицы в поток
+     * 
+     * Позволяет использовать синтаксис std::cout << matrix.
+     * 
+     * @tparam U тип элементов матрицы
+     * @param out выходной поток
+     * @param matrix матрица для вывода
+     * @return ссылка на выходной поток
+     */
     template <typename U>
     friend std::ostream& operator<<(std::ostream& out, const Matrix<U>& matrix);
 
-    /** @brief Ввод матрицы из потока (cin >> matrix) */
+    /**
+     * @brief Оператор ввода матрицы из потока
+     * 
+     * Позволяет использовать синтаксис std::cin >> matrix.
+     * Читает элементы построчно.
+     * 
+     * @tparam U тип элементов матрицы
+     * @param in входной поток
+     * @param matrix матрица для заполнения
+     * @return ссылка на входной поток
+     */
     template <typename U>
     friend std::istream& operator>>(std::istream& in, Matrix<U>& matrix);
 };
-template <typename T>
-Matrix<T>::Matrix() : rows_count(0), cols_count(0) {}
-
-template <typename T>
-Matrix<T>::Matrix(size_t rows, size_t cols)
-    : rows_count(rows), cols_count(cols), data(rows, std::vector<T>(cols)) {}
-
-template <typename T>
-Matrix<T>::Matrix(size_t rows, size_t cols, const T& value)
-    : rows_count(rows), cols_count(cols), data(rows, std::vector<T>(cols, value)) {}
-
-template <typename T>
-Matrix<T>::Matrix(const Matrix& other)
-    : rows_count(other.rows_count), cols_count(other.cols_count), data(other.data) {}
-
-template <typename T>
-Matrix<T>::~Matrix() {}
-
-template <typename T>
-Matrix<T>& Matrix<T>::operator=(const Matrix& other)
-{
-    if (this != &other) {
-        this->rows_count = other.rows_count;
-        this->cols_count = other.cols_count;
-        this->data = other.data;
-    }
-    return *this;
-}
-
-template <typename T>
-std::vector<T>& Matrix<T>::operator[](size_t row) {
-    return data[row];
-}
-
-template <typename T>
-const std::vector<T>& Matrix<T>::operator[](size_t row) const {
-    return data[row];
-}
-
-template <typename T>
-size_t Matrix<T>::rows() const {
-    return rows_count;
-}
-
-template <typename T>
-size_t Matrix<T>::cols() const {
-    return cols_count;
-}
-
-template <typename T>
-std::string Matrix<T>::toString() const {
-    std::stringstream ss;
-    for (size_t i = 0; i < rows_count; ++i) {
-        for (size_t j = 0; j < cols_count; ++j) {
-            ss << data[i][j] << "\t";
-        }
-        ss << "\n";
-    }
-    return ss.str();
-}
-
-template <typename T>
-void Matrix<T>::fill(const T& value) {
-    for (size_t i = 0; i < rows_count; ++i)
-        for (size_t j = 0; j < cols_count; ++j)
-            data[i][j] = value;
-}
-
-template <typename T>
-void Matrix<T>::fillZero() {
-    fill(T{});
-}
-
-template <typename T>
-void Matrix<T>::resize(size_t rows, size_t cols) {
-    rows_count = rows;
-    cols_count = cols;
-    data.resize(rows, std::vector<T>(cols));
-}
-
-template <typename T>
-std::ostream& operator<<(std::ostream& out, const Matrix<T>& matrix) {
-    out << matrix.toString();
-    return out;
-}
-
-template <typename T>
-std::istream& operator>>(std::istream& in, Matrix<T>& matrix) {
-    for (size_t i = 0; i < matrix.rows_count; ++i)
-        for (size_t j = 0; j < matrix.cols_count; ++j)
-            in >> matrix.data[i][j];
-    return in;
-}
