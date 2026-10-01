@@ -17,8 +17,8 @@ class Matrix
 {
 private:
     std::vector<std::vector<T>> data;  ///< Двумерный массив данных
-    size_t rows_count;                  ///< Количество строк
-    size_t cols_count;                  ///< Количество столбцов
+    const size_t rows_count;                  ///< Количество строк
+    const size_t cols_count;                  ///< Количество столбцов
 
 public:
     /**
@@ -37,7 +37,7 @@ public:
      * @param rows количество строк
      * @param cols количество столбцов
      */
-    Matrix(size_t rows, size_t cols);
+    Matrix(const size_t rows, const size_t cols);
 
     /**
      * @brief Конструктор с заданными размерами и начальным значением
@@ -49,7 +49,7 @@ public:
      * @param cols количество столбцов
      * @param value значение для заполнения всех элементов
      */
-    Matrix(size_t rows, size_t cols, const T& value);
+    Matrix(const size_t rows,const  size_t cols, const T& value);
 
     /**
      * @brief Конструктор копирования
@@ -87,7 +87,7 @@ public:
      * @param row индекс строки (от 0 до rows-1)
      * @return ссылка на вектор элементов строки
      */
-    std::vector<T>& operator[](size_t row);
+    std::vector<T>& operator[](const size_t row);
 
     /**
      * @brief Оператор доступа к строке по индексу (const версия)
@@ -98,7 +98,7 @@ public:
      * @param row индекс строки (от 0 до rows-1)
      * @return константная ссылка на вектор элементов строки
      */
-    const std::vector<T>& operator[](size_t row) const;
+    const std::vector<T>& operator[](const size_t row) const;
 
     /**
      * @brief Получить количество строк матрицы
