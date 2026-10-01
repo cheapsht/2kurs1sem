@@ -18,7 +18,7 @@ public:
      * @param matrix исходная матрица
      * @param generator указатель на генератор
      */
-    Exercise(const Matrix<int>& matrix, Generator* generator);
+    Exercise(const Matrix& matrix, const Generator& generator);
 
     /**
      * @brief Виртуальный деструктор
