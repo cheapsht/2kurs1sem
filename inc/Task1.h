@@ -22,7 +22,7 @@ public:
      * @param matrix исходная матрица
      * @param generator указатель на генератор
      */
-    Task1(const Matrix<int>& matrix, Generator* generator);
+    Task1(const Matrix& matrix, const Generator& generator);
 
     /**
      * @brief Выполнить задание: заменить кратные 3 элементы на 0
