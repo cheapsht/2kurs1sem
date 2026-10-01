@@ -65,7 +65,7 @@ public:
      * 
      * Освобождает ресурсы матрицы.
      */
-    ~Matrix();
+    ~Matrix() = default;
 
     /**
      * @brief Оператор присваивания
@@ -126,15 +126,7 @@ public:
      * 
      * @param value значение, которым нужно заполнить матрицу
      */
-    void fill(const T& value);
-
-    /**
-     * @brief Заполнить матрицу нулями
-     * 
-     * Использует значение по умолчанию для типа T (0 для int, 0.0 для double).
-     */
-    void fillZero();
-
+    void fill(const generator& gen);
     /**
      * @brief Изменить размеры матрицы
      * 
@@ -144,7 +136,7 @@ public:
      * @param rows новое количество строк
      * @param cols новое количество столбцов
      */
-    void resize(size_t rows, size_t cols);
+    void resize(const size_t rows, const size_t cols);
 
     /**
      * @brief Оператор вывода матрицы в поток
