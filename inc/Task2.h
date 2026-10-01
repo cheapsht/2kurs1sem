@@ -24,7 +24,7 @@ public:
      * @param matrix исходная матрица
      * @param generator указатель на генератор
      */
-    Task2(const Matrix<int>& matrix, Generator* generator);
+    Task2(const Matrix& matrix, const Generator& generator);
 
     /**
      * @brief Выполнить задание: удалить строки по условию
