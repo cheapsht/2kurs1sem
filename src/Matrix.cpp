@@ -30,7 +30,7 @@ Matrix<T>& Matrix<T>::operator=(const Matrix& other) {
     return *this;
 }
 template <typename T>
-std::vector<T>& Matrix<T>::operator[](size_t row) {
+std::vector& Matrix::operator[](const size_t row) {
     // .at() проверяет границы и выбрасывает std::out_of_range при ошибке
     return data.at(row); 
 }
