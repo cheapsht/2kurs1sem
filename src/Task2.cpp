@@ -6,8 +6,6 @@ Task2::Task2(const Matrix<int>& matrix, Generator* generator)
 void Task2::solve()
 {
     if (matrix.cols() < 2) return;
-
-    Matrix<int> result;
     size_t newRows = 0;
 
     for (size_t i = 0; i < matrix.rows(); ++i) {
@@ -18,7 +16,7 @@ void Task2::solve()
         }
     }
 
-    result.resize(newRows, matrix.cols());
+    Matrix result (newRows, matrix.cols());
 
     size_t newRow = 0;
     for (size_t i = 0; i < matrix.rows(); ++i) {
