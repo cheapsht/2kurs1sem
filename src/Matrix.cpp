@@ -29,9 +29,6 @@ Matrix<T>& Matrix<T>::operator=(const Matrix& other) {
     }
     return *this;
 }
-
-template <typename T>
-Matrix<T>::~Matrix() {}
 template <typename T>
 std::vector<T>& Matrix<T>::operator[](size_t row) {
     // .at() проверяет границы и выбрасывает std::out_of_range при ошибке
@@ -39,7 +36,7 @@ std::vector<T>& Matrix<T>::operator[](size_t row) {
 }
 
 template <typename T>
-const std::vector<T>& Matrix<T>::operator[](size_t row) const {
+const std::vector& Matrix::operator[](const size_t row) const {
     // Аналогичная проверка для константной версии
     return data.at(row);
 }
@@ -66,7 +63,7 @@ template <typename T>
 void Matrix<T>::fill(const T& value) {
     for (size_t i = 0; i < rows_count; ++i)
         for (size_t j = 0; j < cols_count; ++j)
-            data[i][j] = value;
+            data[i][j] = gen.generate();
 }
 
 template <typename T>
