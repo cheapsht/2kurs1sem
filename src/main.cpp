@@ -1,6 +1,6 @@
 /**
  * @file main.cpp
- * @brief Программа работы с матрицами: ввод, заполнение, решение задач.
+ * @brief Основная программа для работы с матрицами и решения задач.
  */
 
 #include <iostream>
@@ -12,26 +12,20 @@
 #include "ConstantGenerator.hpp"
 #include "Task1.hpp"
 #include "Task2.hpp"
-
-// --- Константы конфигурации и интерфейса ---
-constexpr int MIN_RAND = -50;       ///< Минимум для случайной генерации
-constexpr int MAX_RAND = 50;        ///< Максимум для случайной генерации
-
-const std::string MSG_MENU      = "\nКак заполнить матрицу?";
-const std::string MSG_OPT_RAND  = "1 - Случайными числами";
-const std::string MSG_OPT_MAN   = "2 - С клавиатуры";
-const std::string MSG_OPT_ZERO  = "3 - Нулями";
-const std::string MSG_OPT_CONST = "4 - Константой";
-const std::string MSG_ERR_CHOICE= "Неверный выбор! По умолчанию: случайные числа.";
-const std::string MSG_INPUT_CONST = "Введите константу: ";
-const std::string MSG_INPUT_ROWS  = "Количество строк: ";
-const std::string MSG_INPUT_COLS  = "Количество столбцов: ";
+#define MSG_MENU        "\nКак заполнить матрицу?"
+#define MSG_OPT_RAND    "1 - Случайными числами"
+#define MSG_OPT_MAN     "2 - С клавиатуры"
+#define MSG_OPT_ZERO    "3 - Нулями"
+#define MSG_OPT_CONST   "4 - Константой"
+#define MSG_ERR_CHOICE  "Неверный выбор! По умолчанию: случайные числа."
+#define MSG_INPUT_CONST "Введите константу: "
+#define MSG_INPUT_ROWS  "Количество строк: "
+#define MSG_INPUT_COLS  "Количество столбцов: "
 
 /// Способы заполнения матрицы
 enum FillMethod { RANDOM = 1, MANUAL = 2, ZEROES = 3, CONSTANT = 4 };
-
 /**
- * @brief Выводит меню и возвращает выбранный способ заполнения.
+ * @brief Отображает меню и возвращает выбранный способ заполнения.
  * @return FillMethod Выбранный метод (по умолчанию RANDOM).
  */
 FillMethod getFillMethod() {
@@ -61,41 +55,25 @@ FillMethod getFillMethod() {
  * @param[out] cols Количество столбцов (> 0).
  */
 void inputDimensions(size_t& rows, size_t& cols) {
-    do { std::cout << MSG_INPUT_ROWS; std::cin >> rows; } while (!rows);
-    do { std::cout << MSG_INPUT_COLS; std::cin >> cols; } while (!cols);
-}
+    do { 
+        std::cout << MSG_INPUT_ROWS; 
+        std::cin >> rows; 
+    } while (!rows);
 
-/**
- * @brief Фабрика генераторов значений для матрицы.
- * @param method Способ заполнения.
- * @return Generator* Указатель на созданный генератор.
- */
-Generator* createGenerator(FillMethod method) {
-    switch (method) {
-        case RANDOM:   return new RandomGenerator(MIN_RAND, MAX_RAND);
-        case MANUAL:   return new IStreamGenerator(std::cin);
-        case ZEROES:   return new ConstantGenerator(0);
-        case CONSTANT: {
-            int val = 0;
-            std::cout << MSG_INPUT_CONST;
-            std::cin >> val;
-            return new ConstantGenerator(val);
-        }
-        default:       return new RandomGenerator(MIN_RAND, MAX_RAND);
-    }
+    do { 
+        std::cout << MSG_INPUT_COLS; 
+        std::cin >> cols; 
+    } while (!cols);
 }
-
 /**
- * @brief Заполняет матрицу значениями из генератора.
- * @param matrix Матрица для заполнения.
- * @param gen Генератор значений.
+ * @brief Заполняет матрицу, используя существующий метод Matrix::fill().
+ * @note Для генераторов RANDOM/MANUAL вся матрица заполнится ПЕРВЫМ 
+ *       сгенерированным значением (ограничение текущего интерфейса fill(value)).
+ *       Для CONSTANT/ZEROES работает корректно.
  */
 void fillMatrix(Matrix<int>& matrix, Generator& gen) {
-    for (size_t i = 0; i < matrix.rows(); ++i)
-        for (size_t j = 0; j < matrix.cols(); ++j)
-            matrix[i][j] = gen.generate();
+    matrix.fill(gen.generate()); 
 }
-
 /**
  * @brief Решает и выводит результат Задания 1.
  * @param matrix Исходная матрица.
@@ -118,21 +96,51 @@ void executeTask2(const Matrix<int>& matrix) {
     std::cout << "\n--- Task 2 (удаление строк) ---\n" << task.getMatrix();
 }
 
+/**
+ * @brief main - точка входа
+ */
 int main() {
-    setlocale(LC_ALL, "ru_RU.UTF-8");
+    constexpr int MIN_RAND = -50;   ///< Минимум для случайной генерации
+    constexpr int MAX_RAND = 50;    ///< Максимум для случайной генерации
 
-
+    // 1. Инициализация матрицы
     size_t rows = 0, cols = 0;
     inputDimensions(rows, cols);
     Matrix<int> matrix(rows, cols);
 
+    // 2. Выбор метода и создание генератора
     FillMethod method = getFillMethod();
-    Generator* gen = createGenerator(method);
+    Generator* gen = nullptr;
+
+    switch (method) {
+        case RANDOM:   
+            gen = new RandomGenerator(MIN_RAND, MAX_RAND); 
+            break;
+        case MANUAL:   
+            gen = new IStreamGenerator(std::cin); 
+            break;
+        case ZEROES:   
+            gen = new ConstantGenerator(0); 
+            break;
+        case CONSTANT: {
+            int val = 0;
+            std::cout << MSG_INPUT_CONST;
+            std::cin >> val;
+            gen = new ConstantGenerator(val);
+            break;
+        }
+        default:       
+            gen = new RandomGenerator(MIN_RAND, MAX_RAND);
+    }
+
+    // 3. Заполнение матрицы
     fillMatrix(matrix, *gen);
     delete gen;
 
+    // 4. Вывод исходных данных
     std::cout << "\n=== Исходная матрица ===\n" << matrix;
 
+    // 5. Решение задач
     executeTask1(matrix);
     executeTask2(matrix);
 
