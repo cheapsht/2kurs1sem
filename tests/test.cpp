@@ -1,4 +1,4 @@
-#include <cassert>
+#include <gtest/gtest.h>
 #include <sstream>
 #include "Matrix.h"
 #include "RandomGenerator.h"
@@ -7,284 +7,303 @@
 #include "Task1.h"
 #include "Task2.h"
 
-// Matrix
-void test_matrix_default_ctor() {
+//тесты матрицы
+
+TEST(MatrixTest, DefaultConstructor) {
     Matrix<int> m;
-    assert(m.rows() == 0 && m.cols() == 0);
+    ASSERT_EQ(m.rows(), 0);
+    ASSERT_EQ(m.cols(), 0);
 }
 
-void test_matrix_param_ctor() {
+TEST(MatrixTest, ParamConstructor) {
     Matrix<int> m(3, 4);
-    assert(m.rows() == 3 && m.cols() == 4);
+    ASSERT_EQ(m.rows(), 3);
+    ASSERT_EQ(m.cols(), 4);
 }
 
-void test_matrix_fill_ctor() {
+TEST(MatrixTest, FillConstructor) {
     Matrix<int> m(2, 3, 7);
-    assert(m[0][0] == 7 && m[1][2] == 7);
+    ASSERT_EQ(m[0][0], 7);
+    ASSERT_EQ(m[1][2], 7);
 }
 
-void test_matrix_copy_ctor() {
+TEST(MatrixTest, CopyConstructor) {
     Matrix<int> m1(2, 2, 5);
     Matrix<int> m2(m1);
-    assert(m2[0][0] == 5 && m2[1][1] == 5);
+    ASSERT_EQ(m2[0][0], 5);
+    ASSERT_EQ(m2[1][1], 5);
 }
 
-void test_matrix_assignment() {
+TEST(MatrixTest, AssignmentOperator) {
     Matrix<int> m1(2, 2, 10);
     Matrix<int> m2(1, 1, 0);
     m2 = m1;
-    assert(m2.rows() == 2 && m2[0][0] == 10);
+    ASSERT_EQ(m2.rows(), 2);
+    ASSERT_EQ(m2[0][0], 10);
 }
 
-void test_matrix_index_operator() {
+TEST(MatrixTest, IndexOperator) {
     Matrix<int> m(3, 3);
     m[0][0] = 100;
     m[2][2] = 200;
-    assert(m[0][0] == 100 && m[2][2] == 200);
+    ASSERT_EQ(m[0][0], 100);
+    ASSERT_EQ(m[2][2], 200);
 }
 
-void test_matrix_rows_cols() {
+TEST(MatrixTest, RowsColsGetters) {
     Matrix<int> m(5, 7);
-    assert(m.rows() == 5 && m.cols() == 7);
+    ASSERT_EQ(m.rows(), 5);
+    ASSERT_EQ(m.cols(), 7);
 }
 
-void test_matrix_to_string() {
+TEST(MatrixTest, ToStringNotEmpty) {
     Matrix<int> m(2, 2, 3);
     std::string str = m.toString();
-    assert(!str.empty() && str.find("3") != std::string::npos);
+    ASSERT_FALSE(str.empty());
+    ASSERT_NE(str.find("3"), std::string::npos);
 }
 
-void test_matrix_fill() {
+TEST(MatrixTest, FillMethod) {
     Matrix<int> m(3, 3);
     m.fill(42);
-    assert(m[0][0] == 42 && m[2][2] == 42);
+    ASSERT_EQ(m[0][0], 42);
+    ASSERT_EQ(m[2][2], 42);
 }
 
-void test_matrix_fill_zero() {
+TEST(MatrixTest, FillZeroMethod) {
     Matrix<int> m(2, 2, 100);
     m.fillZero();
-    assert(m[0][0] == 0 && m[1][1] == 0);
+    ASSERT_EQ(m[0][0], 0);
+    ASSERT_EQ(m[1][1], 0);
 }
 
-void test_matrix_resize() {
+TEST(MatrixTest, ResizeMethod) {
     Matrix<int> m(2, 2);
     m.resize(4, 5);
-    assert(m.rows() == 4 && m.cols() == 5);
+    ASSERT_EQ(m.rows(), 4);
+    ASSERT_EQ(m.cols(), 5);
 }
 
-void test_matrix_output_stream() {
+TEST(MatrixTest, OutputStream) {
     Matrix<int> m(2, 2, 5);
     std::stringstream ss;
     ss << m;
-    assert(!ss.str().empty());
+    ASSERT_FALSE(ss.str().empty());
 }
 
-void test_matrix_input_stream() {
+TEST(MatrixTest, InputStream) {
     Matrix<int> m(2, 2);
     std::istringstream input("1 2 3 4");
     input >> m;
-    assert(m[0][0] == 1 && m[0][1] == 2 && m[1][0] == 3 && m[1][1] == 4);
+    ASSERT_EQ(m[0][0], 1);
+    ASSERT_EQ(m[0][1], 2);
+    ASSERT_EQ(m[1][0], 3);
+    ASSERT_EQ(m[1][1], 4);
 }
 
-void test_matrix_self_assignment() {
+TEST(MatrixTest, SelfAssignment) {
     Matrix<int> m(2, 2, 5);
     m = m;
-    assert(m[0][0] == 5 && m.rows() == 2);
+    ASSERT_EQ(m[0][0], 5);
+    ASSERT_EQ(m.rows(), 2);
 }
-
-// RandomGenerator
-void test_random_generator_range() {
+// ТЕСТЫ ГЕНЕРАТОРОВ
+TEST(RandomGeneratorTest, RangeCheck) {
     RandomGenerator gen(-10, 10);
     for (int i = 0; i < 100; ++i) {
         int val = gen.generate();
-        assert(val >= -10 && val <= 10);
+        ASSERT_GE(val, -10); // Greater or Equal
+        ASSERT_LE(val, 10);  // Less or Equal
     }
 }
 
-void test_random_generator_positive_range() {
+TEST(RandomGeneratorTest, PositiveRange) {
     RandomGenerator gen(1, 100);
     for (int i = 0; i < 50; ++i) {
         int val = gen.generate();
-        assert(val >= 1 && val <= 100);
+        ASSERT_GE(val, 1);
+        ASSERT_LE(val, 100);
     }
 }
 
-// IStreamGenerator
-void test_istream_generator_basic() {
+TEST(IStreamGeneratorTest, BasicRead) {
     std::istringstream input("42 15 -7");
     IStreamGenerator gen(input);
-    assert(gen.generate() == 42 && gen.generate() == 15 && gen.generate() == -7);
+    ASSERT_EQ(gen.generate(), 42);
+    ASSERT_EQ(gen.generate(), 15);
+    ASSERT_EQ(gen.generate(), -7);
 }
 
-void test_istream_generator_empty() {
+TEST(IStreamGeneratorTest, EmptyStream) {
     std::istringstream input("");
     IStreamGenerator gen(input);
-    assert(gen.generate() == 0);
+    ASSERT_EQ(gen.generate(), 0);
 }
 
-// ConstantGenerator
-void test_constant_generator_zero() {
+TEST(ConstantGeneratorTest, ZeroValue) {
     ConstantGenerator gen(0);
-    assert(gen.generate() == 0 && gen.generate() == 0);
+    ASSERT_EQ(gen.generate(), 0);
+    ASSERT_EQ(gen.generate(), 0);
 }
 
-void test_constant_generator_value() {
+TEST(ConstantGeneratorTest, SpecificValue) {
     ConstantGenerator gen(42);
-    assert(gen.generate() == 42 && gen.generate() == 42);
+    ASSERT_EQ(gen.generate(), 42);
 }
 
-void test_constant_generator_negative() {
+TEST(ConstantGeneratorTest, NegativeValue) {
     ConstantGenerator gen(-10);
-    assert(gen.generate() == -10);
+    ASSERT_EQ(gen.generate(), -10);
 }
 
-// Task1
-void test_task1_basic() {
+//тесты заданий
+
+TEST(Task1Test, BasicMultiplesOfThree) {
     Matrix<int> m(2, 3);
     m[0][0] = 3;  m[0][1] = 4;  m[0][2] = 6;
     m[1][0] = 7;  m[1][1] = 9;  m[1][2] = 2;
+    
     RandomGenerator dummy(0, 0);
     Task1 task(m, &dummy);
     task.solve();
+    
     Matrix<int> res = task.getMatrix();
-    assert(res[0][0] == 0 && res[0][1] == 4 && res[0][2] == 0);
-    assert(res[1][0] == 7 && res[1][1] == 0 && res[1][2] == 2);
+    ASSERT_EQ(res[0][0], 0); // 3 -> 0
+    ASSERT_EQ(res[0][1], 4); // 4 unchanged
+    ASSERT_EQ(res[0][2], 0); // 6 -> 0
+    ASSERT_EQ(res[1][0], 7); // 7 unchanged
+    ASSERT_EQ(res[1][1], 0); // 9 -> 0
+    ASSERT_EQ(res[1][2], 2); // 2 unchanged
 }
 
-void test_task1_all_multiples() {
+TEST(Task1Test, AllMultiples) {
     Matrix<int> m(2, 2);
     m[0][0] = 3;  m[0][1] = 6;
     m[1][0] = 9;  m[1][1] = 12;
+    
     RandomGenerator dummy(0, 0);
     Task1 task(m, &dummy);
     task.solve();
+    
     Matrix<int> res = task.getMatrix();
-    assert(res[0][0] == 0 && res[0][1] == 0 && res[1][0] == 0 && res[1][1] == 0);
+    ASSERT_EQ(res[0][0], 0);
+    ASSERT_EQ(res[0][1], 0);
+    ASSERT_EQ(res[1][0], 0);
+    ASSERT_EQ(res[1][1], 0);
 }
 
-void test_task1_no_multiples() {
+TEST(Task1Test, NoMultiples) {
     Matrix<int> m(2, 2);
     m[0][0] = 1;  m[0][1] = 2;
     m[1][0] = 4;  m[1][1] = 5;
+    
     RandomGenerator dummy(0, 0);
     Task1 task(m, &dummy);
     task.solve();
+    
     Matrix<int> res = task.getMatrix();
-    assert(res[0][0] == 1 && res[0][1] == 2 && res[1][0] == 4 && res[1][1] == 5);
+    ASSERT_EQ(res[0][0], 1);
+    ASSERT_EQ(res[0][1], 2);
+    ASSERT_EQ(res[1][0], 4);
+    ASSERT_EQ(res[1][1], 5);
 }
 
-void test_task1_negative() {
+TEST(Task1Test, NegativeNumbers) {
     Matrix<int> m(1, 2);
-    m[0][0] = -3; m[0][1] = -4;
+    m[0][0] = -3; 
+    m[0][1] = -4;
+    
     RandomGenerator dummy(0, 0);
     Task1 task(m, &dummy);
     task.solve();
+    
     Matrix<int> res = task.getMatrix();
-    assert(res[0][0] == 0 && res[0][1] == -4);
+    ASSERT_EQ(res[0][0], 0);   // -3 кратно 3
+    ASSERT_EQ(res[0][1], -4);  // -4 не кратно
 }
 
-void test_task1_zero_element() {
+TEST(Task1Test, ZeroElement) {
     Matrix<int> m(1, 2);
-    m[0][0] = 0;  m[0][1] = 5;
+    m[0][0] = 0;  
+    m[0][1] = 5;
+    
     RandomGenerator dummy(0, 0);
     Task1 task(m, &dummy);
     task.solve();
+    
     Matrix<int> res = task.getMatrix();
-    assert(res[0][0] == 0 && res[0][1] == 5);
+    ASSERT_EQ(res[0][0], 0); // 0 кратен любому числу, остается 0
+    ASSERT_EQ(res[0][1], 5);
 }
 
-// Task2
-void test_task2_delete_some() {
+TEST(Task2Test, DeleteSomeRows) {
     Matrix<int> m(3, 4);
-    m[0][0] = 1; m[0][1] = 5; m[0][2] = 3; m[0][3] = 2;
-    m[1][0] = 1; m[1][1] = 2; m[1][2] = 5; m[1][3] = 2;
-    m[2][0] = 1; m[2][1] = 8; m[2][2] = 1; m[2][3] = 2;
+    m[0][0] = 1; m[0][1] = 5; m[0][2] = 3; m[0][3] = 2; // 5 > 2? YES -> delete
+    m[1][0] = 1; m[1][1] = 2; m[1][2] = 5; m[1][3] = 2; // 2 > 5? NO  -> keep
+    m[2][0] = 1; m[2][1] = 8; m[2][2] = 1; m[2][3] = 2; // 8 > 2? YES -> delete
+    
     RandomGenerator dummy(0, 0);
     Task2 task(m, &dummy);
     task.solve();
+    
     Matrix<int> res = task.getMatrix();
-    assert(res.rows() == 1 && res.cols() == 4 && res[0][1] == 2);
+    ASSERT_EQ(res.rows(), 1);
+    ASSERT_EQ(res.cols(), 4);
+    ASSERT_EQ(res[0][1], 2);
 }
 
-void test_task2_delete_none() {
+TEST(Task2Test, DeleteNone) {
     Matrix<int> m(2, 4);
-    m[0][0] = 1; m[0][1] = 2; m[0][2] = 5; m[0][3] = 3;
-    m[1][0] = 1; m[1][1] = 1; m[1][2] = 3; m[1][3] = 2;
+    m[0][0] = 1; m[0][1] = 2; m[0][2] = 5; m[0][3] = 3; // 2 > 3? NO
+    m[1][0] = 1; m[1][1] = 1; m[1][2] = 3; m[1][3] = 2; // 1 > 2? NO
+    
     RandomGenerator dummy(0, 0);
     Task2 task(m, &dummy);
     task.solve();
+    
     Matrix<int> res = task.getMatrix();
-    assert(res.rows() == 2);
+    ASSERT_EQ(res.rows(), 2);
 }
 
-void test_task2_delete_all() {
+TEST(Task2Test, DeleteAllRows) {
     Matrix<int> m(2, 4);
-    m[0][0] = 1; m[0][1] = 10; m[0][2] = 3; m[0][3] = 2;
-    m[1][0] = 1; m[1][1] = 8;  m[1][2] = 1; m[1][3] = 2;
+    m[0][0] = 1; m[0][1] = 10; m[0][2] = 3; m[0][3] = 2; // 10 > 2? YES
+    m[1][0] = 1; m[1][1] = 8;  m[1][2] = 1; m[1][3] = 2; // 8 > 2? YES
+    
     RandomGenerator dummy(0, 0);
     Task2 task(m, &dummy);
     task.solve();
+    
     Matrix<int> res = task.getMatrix();
-    assert(res.rows() == 0);
+    ASSERT_EQ(res.rows(), 0);
 }
 
-void test_task2_equal_elements() {
+TEST(Task2Test, EqualElements) {
     Matrix<int> m(2, 4);
-    m[0][0] = 1; m[0][1] = 5; m[0][2] = 3; m[0][3] = 2;
-    m[1][0] = 1; m[1][1] = 3; m[1][2] = 5; m[1][3] = 3;
+    m[0][0] = 1; m[0][1] = 5; m[0][2] = 3; m[0][3] = 2; // 5 > 2? YES
+    m[1][0] = 1; m[1][1] = 3; m[1][2] = 5; m[1][3] = 3; // 3 > 3? NO (равны)
+    
     RandomGenerator dummy(0, 0);
     Task2 task(m, &dummy);
     task.solve();
+    
     Matrix<int> res = task.getMatrix();
-    assert(res.rows() == 1 && res[0][1] == 3);
+    ASSERT_EQ(res.rows(), 1);
+    ASSERT_EQ(res[0][1], 3);
 }
 
-void test_task2_small_cols() {
+TEST(Task2Test, SmallColumns) {
     Matrix<int> m(2, 1);
-    m[0][0] = 5; m[1][0] = 5;
+    m[0][0] = 5; 
+    m[1][0] = 5;
+    
     RandomGenerator dummy(0, 0);
     Task2 task(m, &dummy);
     task.solve();
+    
+    // При 1 столбце 2-й элемент и предпоследний — это один и тот же элемент.
+    // Условие "2-й > предпоследнего" никогда не выполнится.
     Matrix<int> res = task.getMatrix();
-    assert(res.rows() == 2 && res.cols() == 1);
-}
-
-int main()
-{
-    test_matrix_default_ctor();
-    test_matrix_param_ctor();
-    test_matrix_fill_ctor();
-    test_matrix_copy_ctor();
-    test_matrix_assignment();
-    test_matrix_index_operator();
-    test_matrix_rows_cols();
-    test_matrix_to_string();
-    test_matrix_fill();
-    test_matrix_fill_zero();
-    test_matrix_resize();
-    test_matrix_output_stream();
-    test_matrix_input_stream();
-    test_matrix_self_assignment();
-
-    test_random_generator_range();
-    test_random_generator_positive_range();
-    test_istream_generator_basic();
-    test_istream_generator_empty();
-    test_constant_generator_zero();
-    test_constant_generator_value();
-    test_constant_generator_negative();
-
-    test_task1_basic();
-    test_task1_all_multiples();
-    test_task1_no_multiples();
-    test_task1_negative();
-    test_task1_zero_element();
-
-    test_task2_delete_some();
-    test_task2_delete_none();
-    test_task2_delete_all();
-    test_task2_equal_elements();
-    test_task2_small_cols();
-
-    return 0;
+    ASSERT_EQ(res.rows(), 2);
+    ASSERT_EQ(res.cols(), 1);
 }
