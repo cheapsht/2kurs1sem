@@ -63,7 +63,7 @@ template <typename T>
 void Matrix<T>::fill(const T& value) {
     for (size_t i = 0; i < rows_count; ++i)
         for (size_t j = 0; j < cols_count; ++j)
-            data[i][j] = value;
+            data[i][j] = gen.generate;
 }
 }
 
