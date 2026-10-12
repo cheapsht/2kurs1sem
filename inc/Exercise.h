@@ -10,16 +10,14 @@ class Exercise
 {
 protected:
     Matrix<int> matrix;   ///< Рабочая копия матрицы
-    Generator* generator; ///< Указатель на генератор (не владеет объектом)
-
+    Generator& generator; ///< ссылка на генератор 
 public:
     /**
      * @brief Конструктор задания
      * @param matrix исходная матрица
      * @param generator указатель на генератор
      */
-    Exercise(const Matrix& matrix, const Generator& generator);
-
+    Exercise(Matrix& matrix, const Generator& generator);
     /**
      * @brief Виртуальный деструктор
      * @note Используем = default, так как специальная очистка не требуется
