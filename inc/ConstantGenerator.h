@@ -20,7 +20,7 @@ public:
      * 
      * @param value значение для возврата (по умолчанию 0)
      */
-    ConstantGenerator(int value = 0);
+    ConstantGenerator(const int value = 0);
 
     /**
      * @brief Вернуть константное значение
