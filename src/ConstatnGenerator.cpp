@@ -1,6 +1,6 @@
 #include "ConstantGenerator.hpp"
 
-ConstantGenerator::ConstantGenerator(int value) : constantValue(value) {}
+ConstantGenerator::ConstantGenerator(const int value)
 
 int ConstantGenerator::generate()
 {
