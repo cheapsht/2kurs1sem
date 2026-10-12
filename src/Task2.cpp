@@ -1,6 +1,6 @@
 #include "Task2.hpp"
 
-Task2::Task2(const Matrix<int>& matrix, Generator* generator)
+sk2::Task2(Matrix<int>& matrix, const Generator& generator)
     : Exercise(matrix, generator) {}
 
 void Task2::solve()
