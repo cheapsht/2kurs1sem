@@ -54,47 +54,24 @@ FillMethod getFillMethod() {
  * @param[out] rows Количество строк (> 0).
  * @param[out] cols Количество столбцов (> 0).
  */
-void inputDimensions(size_t& rows, size_t& cols) {
-    do { 
-        std::cout << MSG_INPUT_ROWS; 
-        std::cin >> rows; 
-    } while (!rows);
-
-    do { 
-        std::cout << MSG_INPUT_COLS; 
-        std::cin >> cols; 
-    } while (!cols);
-}
+void inputDimensions(size_t& rows, size_t& cols);
 /**
  * @brief Заполняет матрицу, используя существующий метод Matrix::fill().
  * @note Для генераторов RANDOM/MANUAL вся матрица заполнится ПЕРВЫМ 
  *       сгенерированным значением (ограничение текущего интерфейса fill(value)).
  *       Для CONSTANT/ZEROES работает корректно.
  */
-void fillMatrix(Matrix<int>& matrix, Generator& gen) {
-    matrix.fill(gen.generate()); 
-}
+void fillMatrix(Matrix<int>& matrix, Generator& gen);
 /**
  * @brief Решает и выводит результат Задания 1.
  * @param matrix Исходная матрица.
  */
-void executeTask1(const Matrix<int>& matrix) {
-    RandomGenerator dummy(0, 0);
-    Task1 task(matrix, &dummy);
-    task.solve();
-    std::cout << "\n--- Task 1 (кратные 3 -> 0) ---\n" << task.getMatrix();
-}
-
+void executeTask1(const Matrix<int>& matrix);
 /**
  * @brief Решает и выводит результат Задания 2.
  * @param matrix Исходная матрица.
  */
-void executeTask2(const Matrix<int>& matrix) {
-    RandomGenerator dummy(0, 0);
-    Task2 task(matrix, &dummy);
-    task.solve();
-    std::cout << "\n--- Task 2 (удаление строк) ---\n" << task.getMatrix();
-}
+void executeTask2(const Matrix<int>& matrix);
 
 /**
  * @brief main - точка входа
@@ -145,4 +122,30 @@ int main() {
     executeTask2(matrix);
 
     return 0;
+}
+void inputDimensions(size_t& rows, size_t& cols) {
+    do { 
+        std::cout << MSG_INPUT_ROWS; 
+        std::cin >> rows; 
+    } while (!rows);
+
+    do { 
+        std::cout << MSG_INPUT_COLS; 
+        std::cin >> cols; 
+    } while (!cols);
+}
+void fillMatrix(Matrix<int>& matrix, Generator& gen) {
+    matrix.fill(gen.generate()); 
+}
+void executeTask1(const Matrix<int>& matrix) {
+    RandomGenerator dummy(0, 0);
+    Task1 task(matrix, &dummy);
+    task.solve();
+    std::cout << "\n--- Task 1 (кратные 3 -> 0) ---\n" << task.getMatrix();
+}
+void executeTask2(const Matrix<int>& matrix) {
+    RandomGenerator dummy(0, 0);
+    Task2 task(matrix, &dummy);
+    task.solve();
+    std::cout << "\n--- Task 2 (удаление строк) ---\n" << task.getMatrix();
 }
