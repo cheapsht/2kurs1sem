@@ -1,7 +1,7 @@
 #include "Task2.hpp"
 
-sk2::Task2(Matrix<int>& matrix, const Generator& generator)
-    : Exercise(matrix, generator) {}
+Task2::Task2::Task2(Matrix<int>& matrix)
+    : Exercise(matrix) {}
 
 void Task2::solve()
 {
