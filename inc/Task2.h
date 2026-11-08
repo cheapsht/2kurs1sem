@@ -22,9 +22,8 @@ public:
      * @brief Конструктор задания 2
      * 
      * @param matrix исходная матрица
-     * @param generator указатель на генератор
      */
-    Task2(Matrix& matrix, const Generator& generator);
+    Task2(const Matrix<int>& matrix);
 
     /**
      * @brief Выполнить задание: удалить строки по условию
