@@ -1,7 +1,7 @@
 #include "Task1.hpp"
 
-Task1::Task1(Matrix<int>& matrix, const Generator& generator)
-    : Exercise(matrix, generator) {}
+Task1::Task1(Matrix<int>& matrix)
+    : Exercise(matrix) {}
 
 void Task1::solve()
 {
