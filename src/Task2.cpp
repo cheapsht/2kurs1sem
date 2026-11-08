@@ -1,6 +1,6 @@
 #include "Task2.hpp"
 
-Task2::Task2::Task2(Matrix<int>& matrix)
+Task2::Task2(Matrix<int>& matrix)
     : Exercise(matrix) {}
 
 void Task2::solve()
@@ -16,7 +16,7 @@ void Task2::solve()
         }
     }
 
-    Matrix result (newRows, matrix.cols());
+    Matrix<int> result(newRows, matrix.cols());
 
     size_t newRow = 0;
     for (size_t i = 0; i < matrix.rows(); ++i) {
