@@ -20,9 +20,8 @@ public:
      * @brief Конструктор задания 1
      * 
      * @param matrix исходная матрица
-     * @param generator указатель на генератор
      */
-    Task1(Matrix& matrix, const Generator& generator);
+    Task1(const Matrix<int>& matrix);
 
     /**
      * @brief Выполнить задание: заменить кратные 3 элементы на 0
