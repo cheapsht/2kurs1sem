@@ -11,8 +11,11 @@ Matrix<T>::Matrix(size_t rows, size_t cols)
     : rows_count(rows), cols_count(cols), data(rows, std::vector<T>(cols)) {}
 
 template <typename T>
-Matrix<T>::Matrix(size_t rows, size_t cols, const T& value)
-    : rows_count(rows), cols_count(cols), data(rows, std::vector<T>(cols, value)) {}
+Matrix<T>::Matrix(size_t rows, size_t cols, const generator& gen)
+    : rows_count(rows), cols_count(cols), data(rows, std::vector<T>(cols))
+{
+    fill(gen);
+}
 
 //Копирование и присваивание
 
@@ -30,15 +33,21 @@ Matrix<T>& Matrix<T>::operator=(const Matrix& other) {
     return *this;
 }
 template <typename T>
-std::vector& Matrix::operator[](const size_t row) {
-    // .at() проверяет границы и выбрасывает std::out_of_range при ошибке
-    return data.at(row); 
+std::vector<T>& Matrix<T>::operator[](const size_t row) {
+    if (row >= data.size()) {
+        throw std::out_of_range("Индекс строки за границами матрицы");
+    }
+    return data[row];
+}
 }
 
 template <typename T>
-const std::vector& Matrix::operator[](const size_t row) const {
-    // Аналогичная проверка для константной версии
-    return data.at(row);
+std::vector<T>& Matrix<T>::operator[](const size_t row) {
+    if (row >= data.size()) {
+        throw std::out_of_range("Индекс строки за границами матрицы");
+    }
+    return data[row];
+}
 }
 
 template <typename T>
