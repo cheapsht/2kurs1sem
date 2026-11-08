@@ -54,7 +54,7 @@ FillMethod getFillMethod() {
  * @param[out] rows Количество строк (> 0).
  * @param[out] cols Количество столбцов (> 0).
  */
-void inputDimensions(size_t& rows, size_t& cols);
+size_t inputDimension(const char* message);
 /**
  * @brief Заполняет матрицу, используя существующий метод Matrix::fill().
  * @note Для генераторов RANDOM/MANUAL вся матрица заполнится ПЕРВЫМ 
@@ -81,8 +81,8 @@ int main() {
     constexpr int MAX_RAND = 50;    ///< Максимум для случайной генерации
 
     // 1. Инициализация матрицы
-    size_t rows = 0, cols = 0;
-    inputDimensions(rows, cols);
+    size_t rows = inputDimension(MSG_INPUT_ROWS);
+    size_t cols = inputDimension(MSG_INPUT_COLS);
     Matrix<int> matrix(rows, cols);
 
     // 2. Выбор метода и создание генератора
@@ -123,16 +123,15 @@ int main() {
 
     return 0;
 }
-void inputDimensions(size_t& rows, size_t& cols) {
-    do { 
-        std::cout << MSG_INPUT_ROWS; 
-        std::cin >> rows; 
-    } while (!rows);
+size_t inputDimension(const char* message) {
+    size_t value = 0;
 
-    do { 
-        std::cout << MSG_INPUT_COLS; 
-        std::cin >> cols; 
-    } while (!cols);
+    do {
+        std::cout << message;
+        std::cin >> value;
+    } while (!value);
+
+    return value;
 }
 void fillMatrix(Matrix<int>& matrix, Generator& gen) {
     matrix.fill(gen.generate()); 
