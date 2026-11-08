@@ -50,9 +50,9 @@ FillMethod getFillMethod() {
 }
 
 /**
- * @brief Запрашивает корректные размеры матрицы у пользователя.
- * @param[out] rows Количество строк (> 0).
- * @param[out] cols Количество столбцов (> 0).
+ * @brief Запрашивает у пользователя размерность.
+ * @param message Приглашение к вводу.
+ * @return Введённая размерность.
  */
 size_t inputDimension(const char* message);
 /**
