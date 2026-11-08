@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Matrix.hpp"
-#include "Generator.hpp"
 
 /**
  * @brief Абстрактный базовый класс для заданий над матрицей
@@ -9,15 +8,13 @@
 class Exercise
 {
 protected:
-    Matrix<int> matrix;   ///< Рабочая копия матрицы
-    Generator& generator; ///< ссылка на генератор 
+    Matrix<int> matrix;   ///< Рабочая копия матрицы 
 public:
     /**
      * @brief Конструктор задания
      * @param matrix исходная матрица
-     * @param generator указатель на генератор
      */
-    Exercise(Matrix& matrix, const Generator& generator);
+    Exercise(const Matrix<int>& matrix);
     /**
      * @brief Виртуальный деструктор
      * @note Используем = default, так как специальная очистка не требуется
