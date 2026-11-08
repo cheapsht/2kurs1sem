@@ -137,14 +137,12 @@ void fillMatrix(Matrix<int>& matrix, Generator& gen) {
     matrix.fill(gen.generate()); 
 }
 void executeTask1(const Matrix<int>& matrix) {
-    RandomGenerator dummy(0, 0);
-    Task1 task(matrix, &dummy);
+    Task1 task(matrix);
     task.solve();
     std::cout << "\n--- Task 1 (кратные 3 -> 0) ---\n" << task.getMatrix();
 }
 void executeTask2(const Matrix<int>& matrix) {
-    RandomGenerator dummy(0, 0);
-    Task2 task(matrix, &dummy);
+    Task2 task(matrix);
     task.solve();
     std::cout << "\n--- Task 2 (удаление строк) ---\n" << task.getMatrix();
 }
