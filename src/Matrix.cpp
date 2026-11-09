@@ -69,11 +69,27 @@ std::string Matrix<T>::toString() const {
 }
 
 template <typename T>
-void Matrix<T>::fill(const T& value) {
+void Matrix<T>::fill(ConstantGenerator& gen)
+{
     for (size_t i = 0; i < rows_count; ++i)
         for (size_t j = 0; j < cols_count; ++j)
-            data[i][j] = gen.generate;
+            data[i][j] = gen.generate();
 }
+
+template <typename T>
+void Matrix<T>::fill(RandomGenerator& gen)
+{
+    for (size_t i = 0; i < rows_count; ++i)
+        for (size_t j = 0; j < cols_count; ++j)
+            data[i][j] = gen.generate();
+}
+
+template <typename T>
+void Matrix<T>::fill(IStreamGenerator& gen)
+{
+    for (size_t i = 0; i < rows_count; ++i)
+        for (size_t j = 0; j < cols_count; ++j)
+            data[i][j] = gen.generate();
 }
 
 template <typename T>
