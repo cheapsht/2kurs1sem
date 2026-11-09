@@ -133,8 +133,6 @@ size_t inputDimension(const char* message) {
 
     return value;
 }
-void fillMatrix(Matrix<int>& matrix, Generator& gen) {
-    matrix.fill(gen.generate()); 
 }
 void executeTask1(const Matrix<int>& matrix) {
     Task1 task(matrix);
