@@ -19,9 +19,14 @@ template <typename T>
 class Matrix
 {
 private:
-    std::vector<std::vector<T>> data;  ///< Двумерный массив данных
-    const size_t rows_count;                  ///< Количество строк
-    const size_t cols_count;                  ///< Количество столбцов
+       /** @brief Данные матрицы: внешний вектор хранит строки, внутренние — элементы строк. */
+    const std::vector<std::vector<T>> data;
+
+    /** @brief Количество строк матрицы. */
+    const size_t rows_count;
+
+    /** @brief Количество столбцов матрицы. */
+    const size_t cols_count;                ///< Количество столбцов
 
 public:
     /**
