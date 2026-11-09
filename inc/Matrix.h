@@ -3,6 +3,9 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include "ConstantGenerator.h"
+#include "RandomGenerator.h"
+#include "IStreamGenerator.h"
 
 /**
  * @brief Шаблонный класс двумерной матрицы
@@ -122,11 +125,22 @@ public:
     std::string toString() const;
 
     /**
-     * @brief Заполнить всю матрицу заданным значением
-     * 
-     * @param value значение, которым нужно заполнить матрицу
+     * @brief Заполнить матрицу константным значением.
+     * @param gen Генератор, возвращающий заданную константу.
      */
-    void fill(const generator& gen);
+    void fill(ConstantGenerator& gen);
+
+    /**
+     * @brief Заполнить матрицу случайными числами.
+     * @param gen Генератор случайных чисел в заданном диапазоне.
+     */
+    void fill(RandomGenerator& gen);
+
+    /**
+     * @brief Заполнить матрицу значениями из входного потока.
+     * @param gen Генератор, считывающий значения из потока.
+     */
+    void fill(IStreamGenerator& gen);
     /**
      * @brief Изменить размеры матрицы
      * 
