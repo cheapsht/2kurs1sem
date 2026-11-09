@@ -2,7 +2,7 @@
  * @file main.cpp
  * @brief Основная программа для работы с матрицами и решения задач.
  */
-
+#include <stdexcept>
 #include <iostream>
 #include <locale>
 #include <string>
@@ -50,18 +50,12 @@ FillMethod getFillMethod() {
 }
 
 /**
- * @brief Запрашивает у пользователя размерность.
- * @param message Приглашение к вводу.
+ * @brief Запросить ненулевую размерность.
+ * @param message Указатель на строку приглашения к вводу.
  * @return Введённая размерность.
+ * @throws std::invalid_argument Если message равен nullptr.
  */
 size_t inputDimension(const char* message);
-/**
- * @brief Заполняет матрицу, используя существующий метод Matrix::fill().
- * @note Для генераторов RANDOM/MANUAL вся матрица заполнится ПЕРВЫМ 
- *       сгенерированным значением (ограничение текущего интерфейса fill(value)).
- *       Для CONSTANT/ZEROES работает корректно.
- */
-void fillMatrix(Matrix<int>& matrix, Generator& gen);
 /**
  * @brief Решает и выводит результат Задания 1.
  * @param matrix Исходная матрица.
@@ -86,33 +80,44 @@ int main() {
     Matrix<int> matrix(rows, cols);
 
     // 2. Выбор метода и создание генератора
-    FillMethod method = getFillMethod();
-    Generator* gen = nullptr;
+    // 2. Выбор метода и заполнение матрицы
+FillMethod method = getFillMethod();
 
-    switch (method) {
-        case RANDOM:   
-            gen = new RandomGenerator(MIN_RAND, MAX_RAND); 
-            break;
-        case MANUAL:   
-            gen = new IStreamGenerator(std::cin); 
-            break;
-        case ZEROES:   
-            gen = new ConstantGenerator(0); 
-            break;
-        case CONSTANT: {
-            int val = 0;
-            std::cout << MSG_INPUT_CONST;
-            std::cin >> val;
-            gen = new ConstantGenerator(val);
-            break;
-        }
-        default:       
-            gen = new RandomGenerator(MIN_RAND, MAX_RAND);
+switch (method) {
+    case RANDOM: {
+        RandomGenerator gen(MIN_RAND, MAX_RAND);
+        matrix.fill(gen);
+        break;
     }
 
-    // 3. Заполнение матрицы
-    fillMatrix(matrix, *gen);
-    delete gen;
+    case MANUAL: {
+        IStreamGenerator gen(std::cin);
+        matrix.fill(gen);
+        break;
+    }
+
+    case ZEROES: {
+        ConstantGenerator gen(0);
+        matrix.fill(gen);
+        break;
+    }
+
+    case CONSTANT: {
+        int val = 0;
+        std::cout << MSG_INPUT_CONST;
+        std::cin >> val;
+
+        ConstantGenerator gen(val);
+        matrix.fill(gen);
+        break;
+    }
+
+    default: {
+        RandomGenerator gen(MIN_RAND, MAX_RAND);
+        matrix.fill(gen);
+        break;
+    }
+}
 
     // 4. Вывод исходных данных
     std::cout << "\n=== Исходная матрица ===\n" << matrix;
@@ -123,7 +128,14 @@ int main() {
 
     return 0;
 }
-size_t inputDimension(const char* message) {
+size_t inputDimension(const char* message)
+{
+    if (message == nullptr) {
+        throw std::invalid_argument(
+            "Сообщение не должно быть nullptr"
+        );
+    }
+
     size_t value = 0;
 
     do {
@@ -132,7 +144,6 @@ size_t inputDimension(const char* message) {
     } while (!value);
 
     return value;
-}
 }
 void executeTask1(const Matrix<int>& matrix) {
     Task1 task(matrix);
