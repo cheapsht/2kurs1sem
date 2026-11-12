@@ -4,10 +4,11 @@
 
 class Author {
 private:
+    const int id;
     const std::string fullName;
 
 public:
-    explicit Author(const std::string& fullName);
+    explicit Author(int id, const std::string& fullName);
 
-    std::string getFullName() const;
+    std::string getInfo() const;
 };
