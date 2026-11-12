@@ -1,9 +1,10 @@
 #include "Author.h"
 
-Author::Author(const std::string& fullName)
-    : fullName(fullName) {
+Author::Author(int id, const std::string& fullName)
+    : id(id), fullName(fullName) {
 }
 
-std::string Author::getFullName() const {
-    return fullName;
+std::string Author::getInfo() const 
+{
+    return std::to_string(id) + ", " + fullName;
 }
