@@ -11,4 +11,10 @@ std::string Author::getInfo() const
 int Author::getId() const 
 {
     return id;
+Author::Author(const std::string& fullName)
+    : fullName(fullName) {
+}
+
+std::string Author::getFullName() const {
+    return fullName;
 }
