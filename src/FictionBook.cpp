@@ -12,8 +12,8 @@ FictionBook::FictionBook(
     const std::string& location,
     const std::string& genre
 )
-    : Book(title, authors, publisher, topic, location),
-      genre(genre) {
+     : Book(title, publisher, topic, location),
+      authors(authors),genre(genre) {
 }
 
 std::string FictionBook::getGenre() const {
@@ -41,4 +41,7 @@ std::string FictionBook::getInfo() const {
     info += "\nЖанр: " + genre;
 
     return info;
+}
+const std::vector<Author>& FictionBook::getAuthors() const {
+    return authors;
 }
