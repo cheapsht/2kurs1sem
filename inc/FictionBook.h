@@ -12,6 +12,8 @@ class FictionBook : public Book {
 private:
     /** @brief Жанр книги. */
     const std::string genre;
+    /** @brief Авторы книги. */
+    const std::vector<Author> authors;
 
 public:
     /**
@@ -43,4 +45,8 @@ public:
      * @return Строка с общими данными и жанром.
      */
     std::string getInfo() const override;
+    /** @brief  список авторов книги.
+    * @return Строка с ФИО авторов
+    */
+    const std::vector<Author>& getAuthors() const override;
 };
