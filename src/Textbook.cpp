@@ -10,8 +10,8 @@ Textbook::Textbook(
     const std::string& location,
     const std::string& subject
 )
-    : Book(title, authors, publisher, topic, location),
-      subject(subject) {
+       : Book(title, publisher, topic, location),
+      authors(authors),subject(subject) {
 }
 
 std::string Textbook::getSubject() const {
@@ -39,4 +39,7 @@ std::string Textbook::getInfo() const {
     info += "\nПредмет: " + subject;
 
     return info;
+}
+const std::vector<Author>& Textbook::getAuthors() const {
+    return authors;
 }
