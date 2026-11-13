@@ -13,10 +13,6 @@ class Book {
 private:
     /** @brief Название книги. */
     const std::string title;
-
-    /** @brief Список авторов книги. */
-    const std::vector<Author> authors;
-
     /** @brief Издательство книги. */
     const Publisher publisher;
 
@@ -37,7 +33,6 @@ public:
      */
     Book(
         const std::string& title,
-        const std::vector<Author>& authors,
         const Publisher& publisher,
         const std::string& topic,
         const std::string& location
@@ -58,7 +53,7 @@ public:
      * @brief Возвращает авторов книги.
      * @return Константная ссылка на список авторов.
      */
-    const std::vector<Author>& getAuthors() const;
+    virtual const std::vector<Author>& getAuthors() const;
 
     /**
      * @brief Возвращает издательство книги.
