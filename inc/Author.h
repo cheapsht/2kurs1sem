@@ -26,4 +26,9 @@ public:
      * @return ID и ФИО через запятую.
      */
     std::string getInfo() const;
+    /**
+     * @brief Возвращает айди автора
+     * @return ID через запятую
+     */
+    int getId() const;
 };
