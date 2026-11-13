@@ -12,6 +12,8 @@ class Textbook : public Book {
 private:
     /** @brief Учебный предмет. */
     const std::string subject;
+    /** @brief Авторы. */
+    const std::vector<Author> authors;
 
 public:
     /**
@@ -43,4 +45,9 @@ public:
      * @return Строка с общими данными и учебным предметом.
      */
     std::string getInfo() const override;
+      /**
+     * @brief Возвращает Фио авторов
+     * @return строка с ФИО авторов
+     */
+    const std::vector<Author>& getAuthors() const override;
 };
