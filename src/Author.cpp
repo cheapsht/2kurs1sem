@@ -8,3 +8,7 @@ std::string Author::getInfo() const
 {
     return std::to_string(id) + ", " + fullName;
 }
+int Author::getId() const 
+{
+    return id;
+}
