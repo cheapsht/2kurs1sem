@@ -2,33 +2,26 @@
 
 #include <string>
 
-/**
- * @brief Автор книги.
- */
+/** @brief Автор книги. */
 class Author {
 private:
-    /** @brief Уникальный номер автора. */
     const int id;
-
-    /** @brief ФИО автора. */
     const std::string fullName;
 
 public:
     /**
      * @brief Создаёт автора.
-     * @param id Уникальный номер.
-     * @param fullName ФИО.
+     * @param id Положительный ID.
+     * @param fullName ФИО автора.
      */
-    explicit Author(int id, const std::string& fullName);
+    Author(int id, const std::string& fullName);
 
-    /**
-     * @brief Возвращает сведения об авторе.
-     * @return ID и ФИО через запятую.
-     */
-    std::string getInfo() const;
-    /**
-     * @brief Возвращает айди автора
-     * @return ID через запятую
-     */
+    /** @brief Возвращает ID автора. */
     int getId() const;
+
+    /** @brief Возвращает ФИО автора. */
+    const std::string& getFullName() const;
+
+    /** @brief Возвращает ID и ФИО через запятую. */
+    std::string getInfo() const;
 };
