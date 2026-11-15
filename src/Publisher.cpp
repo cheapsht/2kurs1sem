@@ -1,9 +1,20 @@
 #include "Publisher.h"
 
-Publisher::Publisher(const std::string& name)
-    : name(name) {
+#include <stdexcept>
+
+Publisher::Publisher(int id, const std::string& name)
+    : id(id), name(name) {
+    if (id <= 0) {
+        throw std::invalid_argument(
+            "ID издательства должен быть положительным"
+        );
+    }
 }
 
-std::string Publisher::getName() const {
+int Publisher::getId() const {
+    return id;
+}
+
+const std::string& Publisher::getName() const {
     return name;
 }
