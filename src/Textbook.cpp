@@ -1,45 +1,60 @@
 #include "Textbook.h"
-#include <vector>
-#include <string>
+
+#include <stdexcept>
 
 Textbook::Textbook(
+    int id,
     const std::string& title,
-    const std::vector<Author>& authors,
-    const Publisher& publisher,
+    const std::vector<int>& authorIds,
+    int publisherId,
     const std::string& topic,
     const std::string& location,
     const std::string& subject
 )
-       : Book(title, publisher, topic, location),
-      authors(authors),subject(subject) {
+    : id(id),
+      title(title),
+      authorIds(authorIds),
+      publisherId(publisherId),
+      topic(topic),
+      location(location),
+      subject(subject) {
+    if (id <= 0) {
+        throw std::invalid_argument("ID книги должен быть положительным");
+    }
 }
 
-std::string Textbook::getSubject() const {
+int Textbook::getId() const {
+    return id;
+}
+
+const std::string& Textbook::getTitle() const {
+    return title;
+}
+
+const std::vector<int>& Textbook::getAuthorIds() const {
+    return authorIds;
+}
+
+int Textbook::getPublisherId() const {
+    return publisherId;
+}
+
+const std::string& Textbook::getTopic() const {
+    return topic;
+}
+
+const std::string& Textbook::getLocation() const {
+    return location;
+}
+
+const std::string& Textbook::getSubject() const {
     return subject;
 }
 
 std::string Textbook::getInfo() const {
-    std::string info = "Учебник: " + getTitle();
-
-    info += "\nАвторы: ";
-
-    const auto& authors = getAuthors();
-
-    for (std::size_t i = 0; i < authors.size(); ++i) {
-        if (i > 0) {
-            info += "; ";
-        }
-
-        info += authors[i].getInfo();
-    }
-
-    info += "\nИздательство: " + getPublisher().getName();
-    info += "\nТематика: " + getTopic();
-    info += "\nРасположение: " + getLocation();
-    info += "\nПредмет: " + subject;
-
-    return info;
-}
-const std::vector<Author>& Textbook::getAuthors() const {
-    return authors;
+    return "Учебник: " + title
+        + "\nID: " + std::to_string(id)
+        + "\nТематика: " + topic
+        + "\nРасположение: " + location
+        + "\nПредмет: " + subject;
 }
