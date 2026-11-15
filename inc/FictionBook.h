@@ -1,52 +1,60 @@
 #pragma once
 
-#include <string>
-#include <vector>
-
 #include "Book.h"
 
-/**
- * @brief Художественная книга с указанием жанра.
- */
+/** @brief Художественная книга. */
 class FictionBook : public Book {
 private:
-    /** @brief Жанр книги. */
+    const int id;
+    const std::string title;
+    const std::vector<int> authorIds;
+    const int publisherId;
+    const std::string topic;
+    const std::string location;
     const std::string genre;
-    /** @brief Авторы книги. */
-    const std::vector<Author> authors;
 
 public:
     /**
      * @brief Создаёт художественную книгу.
+     * @param id Положительный ID книги.
      * @param title Название.
-     * @param authors Список авторов.
-     * @param publisher Издательство.
+     * @param authorIds ID авторов.
+     * @param publisherId ID издательства.
      * @param topic Тематика.
-     * @param location Стеллаж и полка.
+     * @param location Расположение.
      * @param genre Жанр.
      */
     FictionBook(
+        int id,
         const std::string& title,
-        const std::vector<Author>& authors,
-        const Publisher& publisher,
+        const std::vector<int>& authorIds,
+        int publisherId,
         const std::string& topic,
         const std::string& location,
         const std::string& genre
     );
 
-    /**
-     * @brief Возвращает жанр книги.
-     * @return Название жанра.
-     */
-    std::string getGenre() const;
+    /** @brief Возвращает ID книги. */
+    int getId() const override;
 
-    /**
-     * @brief Возвращает полную информацию о книге.
-     * @return Строка с общими данными и жанром.
-     */
+    /** @brief Возвращает название. */
+    const std::string& getTitle() const override;
+
+    /** @brief Возвращает ID авторов. */
+    const std::vector<int>& getAuthorIds() const override;
+
+    /** @brief Возвращает ID издательства. */
+    int getPublisherId() const override;
+
+    /** @brief Возвращает тематику. */
+    const std::string& getTopic() const override;
+
+    /** @brief Возвращает расположение. */
+    const std::string& getLocation() const override;
+
+    /** @brief Возвращает жанр. */
+    const std::string& getGenre() const;
+
+    /** @brief Возвращает описание книги. */
     std::string getInfo() const override;
-    /** @brief  список авторов книги.
-    * @return Строка с ФИО авторов
-    */
-    const std::vector<Author>& getAuthors() const override;
 };
