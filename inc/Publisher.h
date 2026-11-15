@@ -2,24 +2,23 @@
 
 #include <string>
 
-/**
- * @brief Издательство книги.
- */
+/** @brief Издательство. */
 class Publisher {
 private:
-    /** @brief Название издательства. */
+    const int id;
     const std::string name;
 
 public:
     /**
      * @brief Создаёт издательство.
-     * @param name Название издательства.
+     * @param id Положительный ID.
+     * @param name Название.
      */
-    explicit Publisher(const std::string& name);
+    Publisher(int id, const std::string& name);
 
-    /**
-     * @brief Возвращает название издательства.
-     * @return Название.
-     */
-    std::string getName() const;
+    /** @brief Возвращает ID издательства. */
+    int getId() const;
+
+    /** @brief Возвращает название издательства. */
+    const std::string& getName() const;
 };
