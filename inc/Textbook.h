@@ -1,53 +1,60 @@
 #pragma once
 
-#include <string>
-#include <vector>
-
 #include "Book.h"
 
-/**
- * @brief Учебник с указанием учебного предмета.
- */
+/** @brief Учебник. */
 class Textbook : public Book {
 private:
-    /** @brief Учебный предмет. */
+    const int id;
+    const std::string title;
+    const std::vector<int> authorIds;
+    const int publisherId;
+    const std::string topic;
+    const std::string location;
     const std::string subject;
-    /** @brief Авторы. */
-    const std::vector<Author> authors;
 
 public:
     /**
      * @brief Создаёт учебник.
+     * @param id Положительный ID книги.
      * @param title Название.
-     * @param authors Список авторов.
-     * @param publisher Издательство.
+     * @param authorIds ID авторов.
+     * @param publisherId ID издательства.
      * @param topic Тематика.
-     * @param location Стеллаж и полка.
+     * @param location Расположение.
      * @param subject Учебный предмет.
      */
     Textbook(
+        int id,
         const std::string& title,
-        const std::vector<Author>& authors,
-        const Publisher& publisher,
+        const std::vector<int>& authorIds,
+        int publisherId,
         const std::string& topic,
         const std::string& location,
         const std::string& subject
     );
 
-    /**
-     * @brief Возвращает учебный предмет.
-     * @return Название предмета.
-     */
-    std::string getSubject() const;
+    /** @brief Возвращает ID книги. */
+    int getId() const override;
 
-    /**
-     * @brief Возвращает полную информацию об учебнике.
-     * @return Строка с общими данными и учебным предметом.
-     */
+    /** @brief Возвращает название. */
+    const std::string& getTitle() const override;
+
+    /** @brief Возвращает ID авторов. */
+    const std::vector<int>& getAuthorIds() const override;
+
+    /** @brief Возвращает ID издательства. */
+    int getPublisherId() const override;
+
+    /** @brief Возвращает тематику. */
+    const std::string& getTopic() const override;
+
+    /** @brief Возвращает расположение. */
+    const std::string& getLocation() const override;
+
+    /** @brief Возвращает учебный предмет. */
+    const std::string& getSubject() const;
+
+    /** @brief Возвращает описание учебника. */
     std::string getInfo() const override;
-      /**
-     * @brief Возвращает Фио авторов
-     * @return строка с ФИО авторов
-     */
-    const std::vector<Author>& getAuthors() const override;
 };
