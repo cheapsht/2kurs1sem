@@ -1,114 +1,70 @@
-#include <iostream>
-#include <locale>
-#include "Matrix.hpp"
-#include "RandomGenerator.hpp"
-#include "IStreamGenerator.hpp"
-#include "ConstantGenerator.hpp"
-#include "Task1.hpp"
-#include "Task2.hpp"
+#include "LibraryCatalog.h"
 
-enum FillMethod
-{
-    RANDOM = 1,
-    MANUAL = 2,
-    ZEROES = 3,
-    CONSTANT = 4
-};
+int main() {
+    LibraryCatalog catalog;
 
-FillMethod getFillMethod()
-{
-    std::cout << "\nКак заполнить матрицу?" << std::endl;
-    std::cout << "1 - Случайными числами" << std::endl;
-    std::cout << "2 - С клавиатуры" << std::endl;
-    std::cout << "3 - Нулями" << std::endl;
-    std::cout << "4 - Константой" << std::endl;
+    catalog.addAuthor(Author(1, "Михаил Булгаков"));
+    catalog.addAuthor(Author(2, "Аркадий Стругацкий"));
+    catalog.addAuthor(Author(3, "Борис Стругацкий"));
+    catalog.addAuthor(Author(4, "Андрей Колмогоров"));
 
-    int choice = 0;
-    std::cin >> choice;
+    catalog.addPublisher(Publisher(10, "Эксмо"));
+    catalog.addPublisher(Publisher(20, "АСТ"));
+    catalog.addPublisher(Publisher(30, "Просвещение"));
 
-    switch (choice) {
-        case RANDOM:   return RANDOM;
-        case MANUAL:   return MANUAL;
-        case ZEROES:   return ZEROES;
-        case CONSTANT: return CONSTANT;
-        default:
-            std::cout << "Неверный выбор! По умолчанию: случайные числа." << std::endl;
-            return RANDOM;
-    }
-}
+    catalog.addFictionBook(FictionBook(
+        101,
+        "Мастер и Маргарита",
+        {1},
+        10,
+        "Художественная литература",
+        "Стеллаж 1, полка 2",
+        "Роман"
+    ));
 
-Generator* createGenerator(FillMethod method)
-{
-    switch (method) {
-        case RANDOM:
-            return new RandomGenerator(-50, 50);
-        case MANUAL:
-            return new IStreamGenerator(std::cin);
-        case ZEROES:
-            return new ConstantGenerator(0);
-        case CONSTANT: {
-            int val = 0;
-            std::cout << "Введите константу для заполнения: ";
-            std::cin >> val;
-            return new ConstantGenerator(val);
-        }
-        default:
-            return new RandomGenerator(-50, 50);
-    }
-}
+    catalog.addFictionBook(FictionBook(
+        102,
+        "Пикник на обочине",
+        {2, 3},
+        20,
+        "Художественная литература",
+        "Стеллаж 1, полка 3",
+        "Фантастика"
+    ));
 
-void fillMatrix(Matrix<int>& matrix, Generator& gen)
-{
-    for (size_t i = 0; i < matrix.rows(); ++i)
-        for (size_t j = 0; j < matrix.cols(); ++j)
-            matrix[i][j] = gen.generate();
-}
+    // Состав авторов учебника упрощён для демонстрации.
+    catalog.addTextbook(Textbook(
+        103,
+        "Алгебра и начала анализа",
+        {4},
+        30,
+        "Математика",
+        "Стеллаж 2, полка 1",
+        "Алгебра"
+    ));
 
-void inputDimensions(size_t& rows, size_t& cols)
-{
-    std::cout << "Введите количество строк: ";
-    std::cin >> rows;
-    std::cout << "Введите количество столбцов: ";
-    std::cin >> cols;
-}
+    const Book& book = catalog.findBookById(102);
+    const Author& author = catalog.findAuthorById(3);
 
-void executeTask1(const Matrix<int>& matrix)
-{
-    RandomGenerator dummy(0, 0);
-    Task1 task1(matrix, &dummy);
-    task1.solve();
-    std::cout << "\nРезультат Task 1 (элементы, кратные 3, заменены на 0):" << std::endl;
-    std::cout << task1.getMatrix();
-}
+    const auto byTitle =
+        catalog.findByTitle("Мастер и Маргарита");
 
-void executeTask2(const Matrix<int>& matrix)
-{
-    RandomGenerator dummy(0, 0);
-    Task2 task2(matrix, &dummy);
-    task2.solve();
-    std::cout << "\nРезультат Task 2 (удалены строки, где 2-й > предпоследнего):" << std::endl;
-    std::cout << task2.getMatrix();
-}
+    const auto byAuthor = catalog.findByAuthor(3);
+    const auto byTopic = catalog.findByTopic("Математика");
+    const auto byPublisher = catalog.findByPublisher("АСТ");
 
-int main()
-{
-    setlocale(LC_ALL, "ru_RU.UTF-8");
+    const auto location = catalog.getLocation(102);
+    const auto info = catalog.getBookInfo(102);
 
-    size_t rows = 0, cols = 0;
-    inputDimensions(rows, cols);
+    // Переменные можно просмотреть в отладчике.
+    (void)book;
+    (void)author;
+    (void)byTitle;
+    (void)byAuthor;
+    (void)byTopic;
+    (void)byPublisher;
+    (void)location;
+    (void)info;
 
-    Matrix<int> matrix(rows, cols);
-
-    FillMethod method = getFillMethod();
-    Generator* gen = createGenerator(method);
-    fillMatrix(matrix, *gen);
-
-    std::cout << "\nИсходная матрица:" << std::endl;
-    std::cout << matrix;
-
-    executeTask1(matrix);
-    executeTask2(matrix);
-
-    delete gen;
     return 0;
 }
