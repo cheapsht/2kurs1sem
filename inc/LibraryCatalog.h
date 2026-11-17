@@ -48,19 +48,19 @@ public:
      * @brief Находит автора по ID.
      * @throws std::out_of_range Если автор не найден.
      */
-    const Author& findAuthorById(int id) const;
+    const Author& findAuthorById(const int id) const;
 
     /**
      * @brief Находит издательство по ID.
      * @throws std::out_of_range Если издательство не найдено.
      */
-    const Publisher& findPublisherById(int id) const;
+    const Publisher& findPublisherById(const int id) const;
 
     /**
      * @brief Находит книгу любого вида по ID.
      * @throws std::out_of_range Если книга не найдена.
      */
-    const Book& findBookById(int id) const;
+    const Book& findBookById(const int id) const;
 
     /** @brief Возвращает ID всех книг каталога. */
     std::vector<int> getBookIds() const;
@@ -69,7 +69,7 @@ public:
     std::vector<int> findByTitle(const std::string& title) const;
 
     /** @brief Возвращает ID книг автора, включая соавторство. */
-    std::vector<int> findByAuthor(int authorId) const;
+    std::vector<int> findByAuthor(const int authorId) const;
 
     /** @brief Возвращает ID книг с точной тематикой. */
     std::vector<int> findByTopic(const std::string& topic) const;
@@ -78,8 +78,8 @@ public:
     std::vector<int> findByPublisher(const std::string& name) const;
 
     /** @brief Возвращает расположение книги по ID. */
-    const std::string& getLocation(int bookId) const;
+    const std::string& getLocation(const int bookId) const;
 
     /** @brief Возвращает описание с ФИО авторов и названием издательства. */
-    std::string getBookInfo(int bookId) const;
+    std::string getBookInfo(const int bookId) const;
 };
