@@ -77,7 +77,7 @@ const std::vector<FictionBook>& LibraryCatalog::getFictionBooks() const {
     return fictionBooks;
 }
 
-const Author& LibraryCatalog::findAuthorById(int id) const {
+const Author& LibraryCatalog::findAuthorById(const int id) const {
     for (const auto& author : authors) {
         if (author.getId() == id) {
             return author;
@@ -87,7 +87,7 @@ const Author& LibraryCatalog::findAuthorById(int id) const {
     throw std::out_of_range("Автор не найден");
 }
 
-const Publisher& LibraryCatalog::findPublisherById(int id) const {
+const Publisher& LibraryCatalog::findPublisherById(const int id) const {
     for (const auto& publisher : publishers) {
         if (publisher.getId() == id) {
             return publisher;
@@ -97,7 +97,7 @@ const Publisher& LibraryCatalog::findPublisherById(int id) const {
     throw std::out_of_range("Издательство не найдено");
 }
 
-const Book& LibraryCatalog::findBookById(int id) const {
+const Book& LibraryCatalog::findBookById(const int id) const {
     for (const auto& textbook : textbooks) {
         if (textbook.getId() == id) {
             return textbook;
@@ -141,7 +141,7 @@ std::vector<int> LibraryCatalog::findByTitle(
     return result;
 }
 
-std::vector<int> LibraryCatalog::findByAuthor(int authorId) const {
+std::vector<int> LibraryCatalog::findByAuthor(const int authorId) const {
     std::vector<int> result;
 
     for (int id : getBookIds()) {
@@ -188,11 +188,11 @@ std::vector<int> LibraryCatalog::findByPublisher(
     return result;
 }
 
-const std::string& LibraryCatalog::getLocation(int bookId) const {
+const std::string& LibraryCatalog::getLocation(const int bookId) const {
     return findBookById(bookId).getLocation();
 }
 
-std::string LibraryCatalog::getBookInfo(int bookId) const {
+std::string LibraryCatalog::getBookInfo(const int bookId) const {
     const Book& book = findBookById(bookId);
 
     std::string info = book.getInfo();
